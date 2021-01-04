@@ -1,0 +1,99 @@
+<%-include("partials/header") %>
+
+
+<div class="container">
+	<div class=" mt-3 d-flex justify-content-center align-items-center">
+		
+		<h1>
+			ÜNVAN EKLE
+		</h1>
+	</div>
+	<form action="/newunv" style="mt-2" method="POST">
+	<div class="form-row" >
+    <div class="col form-group">
+      <input type="text" class="form-control" placeholder="ÜNVAN" name="name">
+  
+   
+		
+  </div>
+		
+    
+    <div class="col form-group">
+      <select class="form-control"id="select1" name="check">
+		  <option value="true">
+			  AKTİF
+		  </option>
+		  <option value="false">PASİF
+		  </option>
+		</select>
+    </div>
+			<button href="/" class="btn btn-success btn-md" style="height:38px;" >ÜNVAN EKLE</button>
+		</div>
+	
+
+	
+</form>
+	<div class="d-flex justify-content-center align-items-center">
+		
+		<h1>
+			ÜNVANLAR
+		</h1>
+	</div>
+<% unvan.forEach(function(unv){%>
+		
+	<div>
+		<form action="/newunv/<%=unv._id%>?_method=PUT" class="mt-2" method="POST" style=" display: inline;">
+	<div class="form-row" >
+    <div class="col form-group">
+      <input type="text" class="form-control" value="<%=unv.isim%>" name="name">
+		</div>
+  <div class="col form-group">
+	  
+	  <select class=" form-control" name="check">
+			<%if(unv.check){%>
+			<option value="true">
+			  AKTİF
+		  </option>
+		  <option value="false">PASİF
+		  </option>
+			
+			<%}
+			else{%>
+			<option value="false">PASİF
+		  </option>
+			<option value="true">
+			  AKTİF
+		  </option>
+		  
+			
+			<%}%>
+		  
+		</select>
+	  </div>
+	  <button href="/" class="btn btn-success btn-md" style="height:38px; width:100px;" >GÜNCELLE</button>
+	  
+	  
+	  
+		
+   
+		
+		</form>
+		<form method="POST" action="/newunv/<%=unv._id%>?_method=DELETE"  style=" display: inline;" >
+		<button href="/" class="btn btn-danger  btn-md" style="height:38px; width:100px;" >SİL</button>
+	</form>
+  </div>
+		
+			
+		
+		
+		
+	</div>
+	
+	<%})%>
+	
+</div>
+
+
+
+
+<%- include("partials/footer") %>

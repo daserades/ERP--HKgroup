@@ -1,0 +1,186 @@
+<%- include("partials/header") %>
+<style>
+	td{
+		text-align: center;
+	}
+	th{
+		text-align: center;
+	}
+	input {
+		text-align:center;
+    border: none;
+    background-color: transparent;
+ }
+	select {  text-align-last:center; }
+</style>
+	
+
+	
+<div class="container">
+	<div class=" mt-5 d-flex justify-content-center align-items-center mb-3">
+		
+		<h1>
+			MODEL EKLE
+		</h1>
+	</div>
+	
+ <div class="text-center">
+	 <form action="/model" style="mt-2" method="POST">
+	<div class="form-row" >
+    <div class="col form-group">
+		<strong>MODEL</strong>
+      <input type="text" class="form-control" placeholder="MODEL İSİM" name="isim" >	
+
+  </div>
+
+    <div class="col form-group">
+		<strong>ÜRÜN TÜRÜ</strong>
+      <select class="form-control"id="select1" name="urunturu">
+		  <%urunturu.forEach(function(urunturu){%>
+		  <option value="<%=urunturu.isim;%>">
+			  <%=urunturu.isim;%>
+		  </option>
+		  	<%});%>
+		 
+		</select>
+    </div>
+	
+		
+    <div class="col form-group">
+		<strong>MARKA</strong>
+      <select class="form-control"id="select1" name="marka" >
+		  <%marka.forEach(function(marka){%>
+		  <option value="<%=marka.isim;%>">
+			  <%=marka.isim;%>
+		  </option>
+		  <%});%>
+		 
+		</select>
+		  </div>
+		<div class="col form-group">
+			<strong>AÇIKLAMA</strong>
+		<input type="text" class="form-control" placeholder="AÇIKLAMA" pattern=".{,23}" name="aciklama" required>
+  
+		</div>
+		<div class="col form-group">
+			<br>
+			<button href="/" class="btn btn-success btn-md " style="height:38px; margin-right:70%;" >+EKLE</button>
+			</div>
+		</div>
+</form>
+	</div>
+	
+	
+</div>
+
+
+
+
+<!-- update route delete -->
+
+
+
+<div class="d-flex justify-content-center align-items-center mt-5 mb-5">
+		
+		<h1>
+			MODELLER
+		</h1>
+	</div>
+
+<table border="1"  style="border:1px solid black;margin-left:auto;margin-right:auto; width:99%; padding-top:25px;">
+	<thead>
+		<tr>
+		<th>İsim</th>
+		<th>Ürün Türü</th>
+		
+		
+		<th>Marka</th>
+			<th>Açıklama</th>
+			<th>İşlem</th>
+		
+		</tr>
+	</thead>
+	<tbody id="myTable">
+		
+		<%model.forEach(function(per){ %> 
+		<tr>
+		<form action="/model/<%=per._id;%>?_method=PUT" style="mt-2" method="POST">
+				
+					
+						
+			
+			 <td style="width:8%;">
+			<input value="<%=per.isim; %>" name="isim" style="width:100%;"></td> 
+			 <td class="form-group" style="width:8%;">
+			
+    
+      <select class="form-control"id="select1" name="urunturu">
+		 <%urunturu.forEach(function(urunturu){%>
+	  
+	  <%if(urunturu.isim===per.urun_turu){%>
+	  <option value="<%=urunturu.isim;%>">
+		  <%=urunturu.isim;%>
+	  </option>
+	  <%}%>
+		  <%});%>
+		
+	 <%urunturu.forEach(function(urunturu){%>
+	        <%if(urunturu.isim!==per.urun_turu){%>
+	  
+		  <option value="<%=urunturu.isim;%>"><%=urunturu.isim;%></option>
+             <%}%>
+		  <%});%>
+		 
+		</select>
+				
+			
+				</td>
+			 
+			<td class="form-group" style="width:8%;">
+			
+    
+      <select class="form-control"id="select1" name="marka">
+		  <%marka.forEach(function(marka){%>
+		  <%if(marka.isim===per.marka){%>
+		  <option value="<%=marka.isim;%>">
+			  <%=marka.isim;%>
+		  </option>
+		  <%}%>
+		  	  <%});%>
+		  <%marka.forEach(function(marka){%>
+		  <%if(marka.isim!==per.marka){%>
+		  <option value="<%=marka.isim;%>">
+			  <%=marka.isim;%>
+		  </option>
+		   <%}%>
+		   <%});%>
+	
+		</select>
+				
+			
+				</td>
+			<td style="width:8%;"><input style="width:100%;" value="<%=per.aciklama; %>" name="aciklama"></td>
+			
+					
+			 <td style="width:9%;" class="text-center"> 
+				    
+				  <button class="btn btn-success btn-md">GÜNCELLE</button>
+				 </form>
+				  <form method="POST" action="/model/<%=per._id;%>?_method=DELETE"  style="display: inline;" >
+		<button  class="btn btn-danger  btn-md" >SİL</button>
+	</form>
+				</td>
+					
+					
+					</tr>
+					
+			
+			
+	<% }); %>
+	
+		</tbody>
+</table>
+
+
+
+<%- include("partials/footer") %>

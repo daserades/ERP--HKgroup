@@ -1,0 +1,62 @@
+<%- include("partials/header") %>
+
+
+<div class="container">
+    <div class=" mt-5 d-flex justify-content-center align-items-center">
+
+        <h1>
+            MARKA EKLE
+        </h1>
+    </div>
+    <form action="/marka" style="mt-2" method="POST">
+    <div class="form-row" style="text-align:center;" >
+    <div class="col form-group">
+      <input type="text" class="form-control justify-content-center" placeholder="MARKA" name="isim" style="width:500px; margin:0px auto; display:block;">
+
+
+        <button href="/" class="btn btn-success mt-2" style="height:40px;">+EKLE</button>
+        </div>
+        </form>
+    </div>
+
+    <div class="d-flex justify-content-center align-items-center">
+
+        <h1>
+            MARKALAR
+        </h1>
+    </div>
+
+
+
+
+        <% marka.forEach(function(mar){ %>
+            <div>
+
+        <form action="/marka/<%=mar._id%>?_method=PUT" method="POST" class="mt-2 d-flex d-inline  justify-content-center" >
+    <div class="form-row" >
+    <div class="col form-group">
+      <input type="text" class="form-control " value="<%=mar.isim%>" name="isim" style="width:500px;">
+        </div>
+        <div class="col form-group">
+
+        <button href="/" class="btn btn-success mb-1">GÜNCELLE</button>
+            </div>
+
+
+</form>
+
+        <form action="/marka/<%=mar._id%>?_method=DELETE"  method="POST" class="d-flex d-inline  justify-content-center" style="display:inline;" >
+        <button href="/" class="btn btn-danger m-0 btn-md" style="height:38px; width:100px;" >SİL</button>
+    </form>
+                </div>
+
+        <%}) %>
+</div>
+
+
+
+
+
+
+
+<%- include("partials/footer") %>

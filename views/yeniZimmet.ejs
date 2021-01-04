@@ -1,0 +1,282 @@
+<%- include("partials/header") %>
+	<script>
+		
+		
+$( function() {
+    $( ".datepicker" ).datepicker();
+  } );
+		
+		
+		
+		 var myApp = new function () {
+        this.printTable = function () {
+			 var tab = document.getElementById('tab');
+			var burak=document.getElementById('burak');
+			var letter=document.getElementById('letter');
+			letter.style.display="block";
+
+           
+            var win = window.open('', '', 'height=700,width=700');
+			win.document.write(burak.outerHTML);
+		win.document.write(tab.outerHTML);
+			win.document.write(letter.outerHTML);
+			
+            
+            win.document.close();
+            win.print();
+			letter.style.display="none";
+		
+			
+        }
+    }
+		 
+		  $('<table/>').append($(elem).clone()).html();
+</script>
+
+
+
+
+<style>
+
+
+	
+	td{
+		text-align: center;
+	}
+	th{
+		text-align: center;
+	}
+	input {
+		text-align:center;
+    border: none;
+    background-color: transparent;
+ }
+	select {  text-align-last:center; }
+</style>
+     <%if(!personel.is_cikis){%>
+	<div class="container">
+	<div class="d-flex justify-content-center align-items-center">
+		
+		<h1>
+			YENİ ZİMMET
+		</h1>
+	</div>
+	<form action="/personel/<%=personel._id%>/yeniZimmet" method="POST">
+		
+		<div class="form-row" >
+   
+		
+		</div><!-- form-row 1!-->
+		
+	<div class="form-row" >
+    <div class="col form-group">
+		<strong>MODEL</strong>
+		<select class="custom-select" name="model">
+			
+			<%model.forEach(function(model){%>
+			
+			<option value="<%=model._id%>"> <%=model.isim%></option>
+			<%})%>
+		</select>
+     
+		
+  </div>
+		<div class="col form-group">
+			<strong>ADET</strong>
+      <label for="example-number-input" class="col-2 col-form-label"></label>
+  
+    <input class="form-control" type="number" name="adet" id="example-number-input" required>
+  
+    </div>
+		<div class="col form-group">
+			<strong>AÇIKLAMA</strong>
+      <input type="text" class="form-control"  name="aciklama">
+    </div>
+		</div> <!--form-row2 !-->
+		
+		<div class="form-row" >
+    <div class="col form-group">
+		<strong>SERİ NUMARASI</strong>
+      <input type="text" class="form-control"  name="serino" required>
+		
+  </div>
+			
+		<div class="col form-group">
+			<strong>ZİMMET BAŞLANGIÇ</strong>
+      <input type="text" class="form-control datepicker" value="0<%=new Date().toLocaleDateString()%>" name="zim_bas" required>
+		
+  </div>
+			
+		<div class="col form-group">
+			<strong>ZİMMET BİTİŞ</strong>
+      <input type="text" class="form-control datepicker"  name="zim_bit">
+		
+  </div>
+		</div> <!--form-row3!-->
+		
+		<div class="d-flex justify-content-center align-items-center">
+		<button href="/" class="btn btn-success btn-lg" style="width:40%;">KAYDET</button>
+		</div>
+		
+		</form>
+</div>
+<%}%>
+<!--ZİMMET DETAYLARI!-->
+
+
+
+
+
+<div class="d-flex justify-content-center align-items-center  mt-5">
+		
+		<h1>
+			ZİMMET DÖKÜMÜ
+		</h1>
+	</div>
+<div class="d-flex justify-content-center align-items-center mt-2">
+		
+		<button onclick="myApp.printTable()" id="print" style="width:20%;" class=" btn btn-lg btn-success">
+			YAZDIR
+	</button>
+	</div>
+
+<table border="1" id="tab" style="border:1px solid black;margin-left:auto;margin-right:auto; width:99%; margin-top:20px; border-collapse: collapse;">
+	<thead>
+		<div class="ml-3" style="margin-top:60px;" id="burak" >
+			<div>
+			<strong>Departman</strong>:<%=personel.departman%>
+			
+		</div>
+		<div>
+			<strong>İsim:</strong><%=personel.isim.toUpperCase()%>
+		</div>
+		<div>
+			<strong>TC:</strong><%=personel.tc%>
+		</div>
+		<div>
+			<strong>Ünvan:</strong><%=personel.unvan%>
+		</div>
+		</div>
+		<tr>
+		
+		<th>Model</th>
+		<th>Seri Numarası</th>
+		<th>Zimmet Detay</th>
+		<th>Adet</th>
+		
+		<th>Zimmet Başlangıç</th>
+		<th>Zimmet Bitiş</th>
+		<%if(!personel.is_cikis){%>
+	<th>İşlemler</th>
+	  <%}%>
+		</tr>
+	</thead>
+	<tbody>
+		
+		
+		 
+		<%personel.zimmet.forEach(function(zimmet){%>
+		
+		<%if(zimmet.status){%>
+		
+		<tr>
+			
+			
+			<form action="/personel/<%=zimmet._id%>/yeniZimmet?_method=PUT" method="POST">
+			
+				
+			
+				 <td style="width:8%;">
+				<select class="form-control" name="model" style="border: none;
+    background-color: transparent;">
+		 <%model.forEach(function(model){%>
+	  
+	  <%if(model._id==zimmet.modelid){%>
+	  <option value="<%=model._id;%>">
+		  <%=model.isim;%>
+	  </option>
+	  <%}%>
+		  <%});%>
+		
+	 <%model.forEach(function(model){%>
+	        <%if(model._id!==zimmet.modelid){%>
+	  
+		  <option value="<%=model._id%>"><%=model.isim%></option>
+             <%}%>
+		  <%});%>
+		 
+		</select>
+				
+				</td>
+
+			  
+			
+		
+			
+			 <td style="width:8%;"> <input type="text" style="border: none;
+    background-color: transparent;" class="form-control" value="<%=zimmet.serino%>" name="serino"></td>
+			 <td style="width:8%;"><input style="border: none;
+    background-color: transparent;"  class="form-control" value="<%=zimmet.aciklama %>" name="aciklama"></td>
+			
+			<td style="width:8%;">
+  
+    <input style="border: none;
+    background-color: transparent;" class="form-control" type="number" value="<%=zimmet.adet%>" name="adet" id="example-number-input"></td>
+			<td style="width:8%;" >
+				<input style="border: none;
+    background-color: transparent;" type="text" class="form-control datepicker" value="<%=zimmet.zim_bas%>" name="zim_bas">
+				</td>
+			<%if(zimmet.zim_bit || personel.is_cikis){%>
+			<td style="width:8%;" ><input type="text" style="border: none;
+    background-color: transparent;" class="form-control datepicker" value="<%=
+				zimmet.zim_bit || personel.is_cikis	%>" name="zim_bit"></td>
+			<%} else{%>
+			<td style="width:8%;" >
+				<input type="text" style="border: none;
+    background-color: transparent;" class="form-control datepicker" name="zim_bit"></td>
+			
+			<%}%>
+		
+		   <%if(!personel.is_cikis){%>
+				 <td style="width:8%;">
+					 	  <button class="btn btn-success btn-md " href="/">GÜNCELLE</button>
+					 
+			
+				</td>
+	<%}%>
+				</form>
+			
+			  
+			
+			</tr>
+		
+		<%}%>
+		<%});%>
+		
+		  
+		 	
+			
+				
+		
+	
+		
+		
+	
+		</tbody>
+	
+</table>
+<div id="letter" style="margin-top:40px; display:none;">
+		<strong style="margin-left:200px;" >Teslim Alan</strong> <strong style="margin-left:350px;">Teslim Eden</strong>
+	</div>
+
+
+
+
+
+
+
+
+		
+	
+
+<%- include("partials/footer") %>

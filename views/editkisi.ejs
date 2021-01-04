@@ -1,0 +1,157 @@
+<%-include("partials/header") %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+<script>
+$( function() {
+    $( ".datepicker" ).datepicker();
+  } );
+	
+
+	
+</script>
+
+<div class="container">
+	<div class="d-flex justify-content-center align-items-center">
+		
+		<h1>
+			ELEMAN BİLGİLERİ
+		</h1>
+	</div>
+	<form action="/personel/<%=kisi._id%>?_method=PUT" method="POST">
+	<div class="form-row" >
+    <div class="col form-group">
+		<strong>İSİM SOYİSİM</strong>
+      <input type="text" class="form-control" value="<%=kisi.isim%>"  name="name">
+  
+   
+		
+  </div>
+		
+    
+    <div class="col form-group">
+			<strong>LOKASYON</strong>
+      <input type="text" value="<%=kisi.lokasyon%>" class="form-control" name="lokasyon">
+    </div>
+			<div class="col form-group">
+					<strong>TC</strong>
+      <input type="text" value="<%=kisi.tc%>" class="form-control" name="tc">
+    </div>
+		</div>
+		<div class="form-row" >
+			<div class="col form-group">
+				<strong>NUMARA</strong>
+      <input type="text" value="<%=kisi.numara%>" class="form-control"  name="numara">
+    </div>
+			<div class="col form-group">
+      
+				
+  <strong>DEPARTMAN</strong>
+  <select class="form-control"  name="departman">
+	  
+		<%departman.forEach(function(departman){%>
+	  
+	  <%if(kisi.departman===departman.isim){%>
+	  <option value="<%=departman.isim%>">
+		  <%=departman.isim%>
+	  </option>
+	  <%}}) %>
+		
+	 <%departman.forEach(function(departman){%>
+	        <%if(kisi.departman!==departman.isim){%>
+	  
+		  <option value="<%=departman.isim%>"><%=departman.isim%></option>
+             <%}%>
+		  <%})%>
+	  </select>
+	  </div>
+			<div class="col form-group">
+      
+				
+  <strong>ÜNVAN</strong>
+  <select class="form-control" name="unvan">
+	  <%unvan.forEach(function(unvan){%>
+	  
+	  <%if(kisi.unvan===unvan.isim){%>
+	  <option value="<%=unvan.isim%>">
+		  <%=unvan.isim%>
+	  </option>
+	  <%}}) %>
+		
+	 <%unvan.forEach(function(unvan){%>
+	        <%if(kisi.unvan!==unvan.isim){%>
+	  
+		  <option value="<%=unvan.isim%>"><%=unvan.isim%></option>
+             <%}%>
+		  <%})%>
+	  </select>
+	  </div>
+
+    </div>
+			
+		<div class="form-row" >
+			<div class="col form-group">
+				<strong>DOĞUM TARİHİ</strong>
+      <input type="text" class="form-control datepicker" value="<%=kisi.dogum%>" name="dogum">
+    </div>
+			<div class="col form-group">
+				<strong>İŞE BAŞLANGIÇ TARİHİ</strong>
+     <input type="text" class="form-control datepicker" value="<%=kisi.is_giris%>" name="is_giris">
+    </div>
+			<%if(kisi.is_cikis){%>
+			<div class="col form-group">
+				<strong>İŞTEN AYRILMA TARİHİ</strong>
+     <input type="text" class="form-control datepicker" value="<%=kisi.is_cikis%>" name="is_giris">
+    </div>
+			<%}%>
+			<div class="col form-group">
+				<strong>E-POSTA</strong>
+      <input type="text" class="form-control" value="<%=kisi.email%>"  name="eposta">
+    </div>
+		</div>
+		<div class="form-row" >
+			
+		<div class="col form-group">
+			<strong>ADRES</strong>
+				
+      <input style="width:950px;" type="text" class="form-control" value="<%=kisi.adres%>"  name="adres">
+    </div>
+			<div class="col form-group">
+			<strong>AÇIKLAMA</strong>
+				
+      <input style="width:150px;" type="text" class="form-control" value="<%=kisi.aciklama%>"  name="aciklama">
+    </div>
+			
+		</div>
+		
+  </div>
+	 <%if(!kisi.is_cikis){%>
+	<div class="d-flex justify-content-center align-items-center">
+		<button href="/personel" class="btn btn-success btn-lg" >GÜNCELLE</button>
+		</form>
+
+		<%var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+var yyyy = today.getFullYear();
+
+today = mm + '/' + dd + '/' + yyyy;%>
+	   
+	    <form action="/personel/cikar/<%=kisi._id%>?_method=PUT" method="POST">
+			
+			<input class="d-none" type="text"  value="<%=today%>" class="form-control" name="is_cikis">
+		<button href="/personel" class="btn ml-5 btn-success btn-lg" >İŞTEN ÇIKAR</button>
+			
+	</form>
+	<%} else {%>
+	  <div class="d-flex justify-content-center align-items-center">
+	     <a href="javascript:history.back()" class="btn btn-success btn-lg" style="width:20%;" >Go Back</a>
+	</div>
+	<%}%>
+		
+	
+	
+</div>
+
+
+
+
+<%- include("partials/footer") %>

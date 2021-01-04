@@ -1,0 +1,116 @@
+<%-include("partials/header") %>
+<script>
+$( function() {
+    $( ".datepicker" ).datepicker();
+  } );
+	
+</script>
+
+<div class="container">
+	<div class="d-flex justify-content-center align-items-center">
+		
+		<h1>
+			YENİ ELEMAN
+		</h1>
+	</div>
+	<form action="/newkisi" method="POST">
+	<div class="form-row" >
+    <div class="col form-group">
+		<strong>İSİM SOYİSİM</strong>
+      <input type="text" class="form-control"  minlength="2" name="name" required title="Lütfen İsim Soyisim Giriniz">
+  
+   
+		
+  </div>
+		
+    
+    <div class="col form-group">
+			<strong>LOKASYON</strong>
+      <input type="text" class="form-control" name="lokasyon" required title="Lütfen Loasyon Giriniz.">
+    </div>
+			<div class="col form-group">
+					<strong>TC</strong>
+      <input type="text" class="form-control" name="tc" required  minlength="11" maxlength="11" size="11" title="Lütfen Geçerli TC Kimlik Numarası Giriniz.">
+    </div>
+		</div>
+		<div class="form-row" >
+			<div class="col form-group">
+				<strong>NUMARA</strong>
+      <input type="text" class="form-control"  name="numara" required minlength="10" maxlength="11" size="11" title="Lütfen Geçerli Bir Telefon Numarası Giriniz.">
+    </div>
+			<div class="col form-group">
+      
+				
+  <strong>DEPARTMAN</strong>
+  <select class="form-control" name="departman" required> 
+	  
+		
+	 <%departman.forEach(function(departman){%>
+			  
+   <%if(departman.check){%>
+  <option value="<%=departman.isim%>"><%=departman.isim%></option>
+  <%}%>
+    
+  
+		  <%})%>
+	  </select>
+	  </div>
+			<div class="col form-group">
+      
+				
+  <strong>ÜNVAN</strong>
+  <select class="form-control" name="unvan" required>
+		
+	 <%unvan.forEach(function(unvan){%>
+			  <%if(unvan.check){%>
+   
+  <option value="<%=unvan.isim%>"><%=unvan.isim%></option>
+
+    <%}%>
+  
+		  <%})%>
+	  </select>
+	  </div>
+
+    </div>
+			
+		<div class="form-row" >
+			<div class="col form-group">
+				<strong>DOĞUM TARİHİ</strong>
+      <input type="text" class="form-control datepicker" required value="0<%=new Date().toLocaleDateString()%>" name="dogum">
+    </div>
+			<div class="col form-group">
+				<strong>İŞE BAŞLANGIÇ TARİHİ</strong>
+     <input type="text" class="form-control datepicker" required value="<%=new Date().toLocaleDateString()%>" name="is_giris">
+    </div>
+			<div class="col form-group">
+				<strong>E-POSTA</strong>
+      <input type="email" required title="Lütfen Geçerli Bir Eposta Adresi Giriniz."  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="form-control"  name="eposta">
+    </div>
+		</div>
+		<div class="form-row" >
+			
+		<div class="col form-group">
+			<strong>ADRES</strong>
+				
+      <input style="width:950px;" required title="Lütfen Adres Giriniz." type="text" class="form-control"  name="adres">
+    </div>
+			<div class="col form-group">
+			<strong>AÇIKLAMA</strong>
+				
+      <input style="width:150px;" type="text" class="form-control"  name="aciklama">
+    </div>
+			
+		</div>
+		
+  </div>
+	<div class="d-flex justify-content-center align-items-center">
+		<button href="/" class="btn btn-success btn-lg" style="width:20%;"><strong>+</strong>YENİ KİŞİ</button>
+	
+</form>
+</div>
+
+
+
+
+<%- include("partials/footer") %>

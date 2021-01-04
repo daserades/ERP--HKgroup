@@ -1,0 +1,110 @@
+<%- include("partials/header") %>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style>
+	
+	td{
+		text-align: center;
+	}
+	th{
+		text-align: center;
+	}
+	table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  
+  padding: 8px;
+}
+
+
+	
+	
+</style>
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+	 
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+<div class="d-flex justify-content-center align-items-center mb-5">
+		
+		<h1>
+			PERSONEL DÖKÜM
+		</h1>
+	</div>
+<div class="d-flex justify-content-center align-items-center mb-5">
+	<input id="myInput" class="form-control " style="margin-left:30%; margin-right:30%;" type="search"  placeholder="Personel Ara.." aria-label="Search">
+</div>
+<table border="1"  style="border:1px solid black;margin-left:auto;margin-right:auto; width:99%; padding-top:25px;">
+	<thead>
+		<tr>
+		<th>İsim Soyisim</th>
+		<th>Lokasyon</th>
+		<th>TC</th>
+		
+		<th>Departman</th>
+		<th>Ünvan</th>
+		<th>Dogum Tarihi</th>
+		<th>İş Giriş Tarihi</th>
+		<th>İş Ayrılış Tarihi</th>
+		
+		<th>İşlem</th>
+		</tr>
+	</thead>
+	<tbody id="myTable">
+		
+		<%personel.forEach(function(per){ %>
+		  <%if(per.condition){%>
+		   <%if(per.is_cikis){%>
+		 	<tr style="background-color:red;">
+			 <%} else {%>
+				<tr>
+				<%}%>
+			 <td style="width:12%;"><%= per.isim %></td> 
+			 <td style="width:8%;"><%= per.lokasyon %></td> 
+			 <td style="width:10%;"><%= per.tc %></td>
+			
+			 <td style="width:12%;"><%= per.departman %></td>
+			 <td style="width:7%;"><%= per.unvan %></td>
+			 <td style="width:8%;"><%= per.dogum %></td>
+			 <td style="width:8%;"><%= per.is_giris %></td>
+			 <% if(per.is_cikis) { %>
+						<td style="width:8%;" ><%=per.is_cikis %></td>
+					<%}
+			 			else { %>
+							<td class="text-center"style="width:8%;">-</td>
+					<%}%>
+			
+			  <td style="width:9%;" class="text-center"> 
+			
+				    
+				  <a class="btn btn-primary btn-sm"  href="/personel/<%=per._id%>/yeniZimmet">ZİMMET DETAY</a>
+				   <%if(!per.is_cikis){%>
+				   <a class="btn btn-success btn-sm" href="/personel/<%=per._id%>">DÜZENLE</a>
+				  <%} else{%>
+				    <a class="btn btn-success btn-sm" href="/personel/<%=per._id%>">PERSONEL DETAY</a>
+				   <%}%>
+				  <form method="POST" action="/personel/pasif/<%=per._id%>?_method=PUT"  >
+		<button  class="btn btn-warning   btn-sm" >SİL</button>
+	</form>
+				 
+				</td>
+			</tr>
+			<%}%>
+	<% }) %>
+	
+		</tbody>
+</table>
+
+
+
+<%- include("partials/footer") %>

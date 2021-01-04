@@ -1,0 +1,63 @@
+<%-include("partials/header") %>
+
+
+<div class="container">
+	<div class=" mt-5 d-flex justify-content-center align-items-center">
+		
+		<h1>
+			ÜRÜN TÜRÜ EKLE
+		</h1>
+	</div>
+	<form action="/urunturu" class="d-flex justify-content-center"style="mt-2 " method="POST">
+	<div class="form-row" >
+    <div class="col form-group">
+      <input type="text" class="form-control" style="width:500px;"placeholder="ÜRÜN TÜRÜ" name="isim">
+  </div>
+		
+    
+    <div class="col form-group">
+      <button href="/" class="btn btn-success text-center btn-md" style="width:100px; height:38px;" >+EKLE</button>
+    </div>
+			
+		</div>
+	
+	
+</form>
+	<div class="d-flex justify-content-center align-items-center">
+		
+		<h1>
+			ÜRÜN TÜRLERİ
+		</h1>
+	</div>
+<%urunturu.forEach(function(dep){%>
+		
+	<div>
+		<form action="/urunturu/<%=dep._id%>?_method=PUT" class="mt-2 d-flex justify-content-center" style=" display: inline;" method="POST">
+	<div class="form-row" >
+    <div class="col form-group">
+      <input type="text" class="form-control" style="width:400px;" value="<%=dep.isim%>" name="isim">
+		</div>
+  <div class="col form-group">
+	  
+	  <button href="/" class="btn btn-success btn-md" style="height:38px; width:100px;" >GÜNCELLE</button>
+	  </div>
+	
+		</form>
+		<form method="POST" action="/urunturu/<%=dep._id%>?_method=DELETE"  clas="d-flex justify-content-center"style=" display: inline;" >
+		<button href="/" class="btn btn-danger btn-md" style="height:38px; width:100px;" >SİL</button>
+	</form>
+			</div>
+		
+		
+		
+		
+	</div>
+	
+	<%})%>
+	
+</div>
+
+
+
+
+<%- include("partials/footer") %>

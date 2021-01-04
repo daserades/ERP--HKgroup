@@ -1,0 +1,173 @@
+<%- include("partials/header") %>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style>
+	
+	td{
+		text-align: center;
+	}
+	th{
+		text-align: center;
+	}
+	table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  
+  padding: 8px;
+}
+
+
+	
+	
+</style>
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+	 
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+
+
+
+
+<div class="d-flex justify-content-center align-items-center mb-3" >
+		
+		<h1>
+			ZİMMET DÖKÜMÜ
+		</h1>
+	
+	</div>
+<div class="d-flex justify-content-center align-items-center mb-5">
+	<input id="myInput" class="form-control " style="margin-left:30%; margin-right:30%;" type="search"  placeholder="Zimmet'de Ara.." aria-label="Search">
+</div>
+
+<table border="1"  style="border:1px solid black;margin-left:auto;margin-right:auto; width:99%; padding-top:25px;">
+	
+	<thead>
+		<tr>
+		<th>Departman</th>
+		<th>İsim Soyisim</th>
+		<th>Açıklama</th>
+		
+		<th>Ürün Türü</th>
+		<th>Marka</th>
+		<th>Seri Numarası</th>
+		<th>Zimmet Detay</th>
+		<th>Adet</th>
+		
+		<th>Zimmet Başlangıç</th>
+		<th>Zimmet Bitiş</th>
+		
+	
+	
+		</tr>
+	</thead>
+	<tbody  id="myTable">
+		
+		<%personel.forEach(function(per){%>
+		 
+		<%per.zimmet.forEach(function(zimmet){%>
+		
+		<%if(zimmet.status){%>
+		<tr>
+			
+			
+			<td style="width:12%;"><%= per.departman %></td> 
+			 <td style="width:8%;"><%= per.isim %></td> 
+				<%model.forEach(function(model){%>
+
+			  <%if(zimmet.modelid==model._id){%>
+			 <td style="width:10%;"><%=model.aciklama%></td>
+		
+			 <td style="width:12%;"><%=model.urun_turu %></td>
+			 <td style="width:7%;"><%=model.marka %></td>
+			<%}%>
+				<%})%>
+			 <td style="width:8%;"><%=zimmet.serino %></td>
+			 <td style="width:8%;"><%=zimmet.aciklama %></td>
+			
+			<td style="width:8%;" ><%=zimmet.adet %></td>
+			<td style="width:8%;" ><%=zimmet.zim_bas %></td>
+			<%if(zimmet.zim_bit || per.is_cikis){%>
+			<td style="width:8%;" ><%=zimmet.zim_bit||per.is_cikis %></td>
+			<%} else{%>
+			<td style="width:8%;" >-</td>
+			
+			<%}%>
+		
+		  
+			
+			  
+			</tr>
+		<%}%>
+		
+		
+		<%});%>
+		
+		  
+		 	
+			
+				
+		
+	<% }); %>
+		
+		<%departman.forEach(function(per){%>
+		 
+		<%per.zimmet.forEach(function(zimmet){%>
+		<tr>
+			
+			<td style="width:12%;"><%= per.isim %></td> 
+			 <td style="width:8%;">-</td> 
+			
+			
+				<%model.forEach(function(model){%>
+
+			  <%if(zimmet.modelid==model._id){%>
+			 <td style="width:10%;"><%=model.aciklama%></td>
+		
+			 <td style="width:12%;"><%=model.urun_turu %></td>
+			 <td style="width:7%;"><%=model.marka %></td>
+			<%}%>
+				<%})%>
+			 <td style="width:8%;"><%=zimmet.serino %></td>
+			 <td style="width:8%;"><%=zimmet.aciklama %></td>
+			
+			<td style="width:8%;" ><%=zimmet.adet %></td>
+			<td style="width:8%;" ><%=zimmet.zim_bas %></td>
+			<%if(zimmet.zim_bit || per.is_cikis){%>
+			<td style="width:8%;" ><%=zimmet.zim_bit || per.is_cikis %></td>
+			<%} else{%>
+			<td style="width:8%;" >-</td>
+			
+			<%}%>
+		
+		 
+			
+			  
+			</tr>
+		
+		
+		<%});%>
+		
+		  
+		 	
+			
+				
+		
+	<% }); %>
+	
+		</tbody>
+</table>
+
+
+
+<%- include("partials/footer") %>
